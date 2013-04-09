@@ -1,46 +1,40 @@
 <?php
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-use ORMTest\Base\Registry;
+    use Monolog\Handler\StreamHandler;
+    use Monolog\Logger;
+    use ORMTest\Base\Registry;
 
-class SimpleSelectTest extends BaseTest
-{
-    private $table = "User";
-    private $view = "OwnedProducts";
-    private $id = 1;
-    private $tableSchema = array("id", "firstName", "lastName", "password");
-    private $viewSchema = array("name", "price", "fullName", "amount");
-
-    public function testSingleColumnSelect()
+    class SimpleSelectTest extends BaseTest
     {
-        $laravel = Registry::get("Laravel");
-        $doctrine2 = Registry::get("Doctrine2");
+        private $table = "User";
+        private $view = "OwnedProducts";
+        private $id = 1;
+        private $tableSchema = array("id", "firstName", "lastName", "password");
+        private $viewSchema = array("name", "price", "fullName", "amount");
 
-        $l = $laravel->singleColumnSelect($this->table, $this->id);
-        $d = $doctrine2->singleColumnSelect($this->table, $this->id);
-        foreach(array($l, $d) as $orm)
-            $this->assertNotNull($orm);
+        public function testSingleColumnSelect()
+        {
+            $orms = $this->getORMs();
+            foreach ($orms as $orm) {
+                $result = $orm->singleColumnSelect($this->table, $this->id);
+                $this->assertNotNull($result);
+            }
+        }
+
+        public function testSingleTableSelect()
+        {
+            $orms = $this->getORMs();
+            foreach ($orms as $orm) {
+                $result = $orm->singleTableSelect($this->table, $this->id);
+                $this->assertSameSize($this->tableSchema, $result);
+            }
+        }
+
+        public function testSingleViewSelect()
+        {
+            $orms = $this->getORMs();
+            foreach ($orms as $orm) {
+                $result = $orm->singleViewSelect($this->view);
+                $this->assertSameSize($this->viewSchema, $result);
+            }
+        }
     }
-
-    public function testSingleTableSelect()
-    {
-        $laravel = Registry::get("Laravel");
-        $doctrine2 = Registry::get("Doctrine2");
-
-        $l = $laravel->singleTableSelect($this->table, $this->id);
-        $d = $doctrine2->singleTableSelect($this->table, $this->id);
-        foreach(array($l, $d) as $orm)
-            $this->assertSameSize($this->tableSchema, $orm);
-    }
-
-    public function testSingleViewSelect()
-    {
-        $laravel = Registry::get("Laravel");
-        $doctrine2 = Registry::get("Doctrine2");
-
-        $l = $laravel->singleViewSelect($this->view);
-        $d = $doctrine2->singleViewSelect($this->view);
-        foreach(array($l, $d) as $orm)
-            $this->assertSameSize($this->viewSchema, $orm);
-    }
-}

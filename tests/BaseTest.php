@@ -3,8 +3,9 @@
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+    use ORMTest\Base\Registry;
 
-abstract class BaseTest extends PHPUnit_Framework_TestCase
+    abstract class BaseTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @var     Logger
@@ -18,5 +19,13 @@ abstract class BaseTest extends PHPUnit_Framework_TestCase
 
         new ORMTest\ORM\Laravel\ORM($this->log);
         new ORMTest\ORM\Doctrine2\ORM($this->log);
+    }
+
+    /**
+     * @return array[ORMTest\Base\ORM]
+     */
+    protected function getORMs()
+    {
+        return Registry::getMany(Registry::types());
     }
 }
