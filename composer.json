@@ -2,7 +2,9 @@
     "require": {
         "gabordemooij/redbean": "v3.4.1",
         "dhorrigan/capsule": "dev-master",
-        "monolog/monolog": "dev-master"
+        "monolog/monolog": "dev-master",
+        "dannykopping/fig": "dev-master",
+        "doctrine/orm": "2.3.3"
     },
 
     "autoload": {
