@@ -53,7 +53,7 @@
 
         protected function singleViewSelect($view)
         {
-            return $this->qb->select('*')
+            return $this->qb->select('op.*')
                 ->from('OwnedProducts', 'op')
                 ->setMaxResults(1)
                 ->execute()

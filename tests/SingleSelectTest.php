@@ -3,7 +3,7 @@
     use Monolog\Logger;
     use ORMTest\Base\Registry;
 
-    class SimpleSelectTest extends BaseTest
+    class SelectTest extends BaseTest
     {
         private $table = "User";
         private $view = "OwnedProducts";
