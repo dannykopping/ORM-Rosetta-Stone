@@ -7,6 +7,9 @@
     use Illuminate\Database\ConnectionResolver;
     use Illuminate\Database\Connectors\ConnectionFactory;
     use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Events\Dispatcher;
+    use ORMTest\ORM\Laravel\Model\Product;
+    use ORMTest\ORM\Laravel\Model\User;
 
     class ORM extends \ORMTest\Base\ORM
     {
@@ -36,18 +39,19 @@
             Connection::make('main', $settings, true);
         }
 
-        protected function singleColumnSelect($table, $id)
+        protected function singleColumnSelect()
         {
-            return DB::table($table)->where('id', '=', $id)->select('firstName')->first();
+            return User::find(1)->firstName;
         }
 
-        protected function singleTableSelect($table, $id)
+        protected function singleTableSelect()
         {
-            return DB::table($table)->where('id', '=', $id)->first();
+            print_r(User::find(1)->toArray());
+            return User::find(1)->toArray();
         }
 
-        protected function singleViewSelect($view)
+        protected function singleViewSelect()
         {
-            return DB::table($view)->first();
+            return DB::table('OwnedProducts')->first();
         }
     }

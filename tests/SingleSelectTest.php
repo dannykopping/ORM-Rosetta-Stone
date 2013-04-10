@@ -8,7 +8,7 @@
         private $table = "User";
         private $view = "OwnedProducts";
         private $id = 1;
-        private $tableSchema = array("id", "firstName", "lastName", "password");
+        private $tableSchema = array("id", "firstName", "lastName", "password", "createdAt", "updatedAt");
         private $viewSchema = array("name", "price", "fullName", "amount");
 
         public function testSingleColumnSelect()

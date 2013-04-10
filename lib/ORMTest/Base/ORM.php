@@ -35,33 +35,25 @@
 
         /**
          * Select a single column from a single table
-         *
-         * @param $table
-         * @param $id
          */
-        protected function singleColumnSelect($table, $id)
+        protected function singleColumnSelect()
         {
-            $this->log->info("Selecting single column from [$table] with user [$id]");
+            $this->log->info("Selecting single column from a table");
         }
 
         /**
          * Select a single table
-         *
-         * @param $table
-         * @param $id
          */
-        protected function singleTableSelect($table, $id)
+        protected function singleTableSelect()
         {
-            $this->log->info("Selecting single table [$table] with user [$id]");
+            $this->log->info("Selecting single table");
         }
 
         /**
          * Select a single view
-         *
-         * @param $view
          */
-        protected function singleViewSelect($view)
+        protected function singleViewSelect()
         {
-            $this->log->info("Selecting single view [$view]");
+            $this->log->info("Selecting single view");
         }
     }
