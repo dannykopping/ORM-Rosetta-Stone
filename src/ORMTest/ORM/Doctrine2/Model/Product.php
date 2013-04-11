@@ -2,55 +2,194 @@
 
 namespace ORMTest\ORM\Doctrine2\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Product
+ * ORMTest\ORM\Doctrine2\Model\Product
  *
- * @ORM\Table(name="Product")
- * @ORM\Entity
+ * @Entity(repositoryClass="ORMTest\ORM\Doctrine2\Model\ProductRepository")
+ * @Table(name="Product", indexes={@Index(name="fk_Product_Category1_idx", columns={"categoryId"})})
  */
 class Product
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="price", type="float", nullable=false)
+     * @Column(type="float", precision=9, scale=2)
      */
-    private $price;
+    protected $price;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Column(type="string", length=255, nullable=true)
      */
-    private $name;
+    protected $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="text", nullable=true)
+     * @Column(type="text", nullable=true)
      */
-    private $description;
+    protected $description;
 
     /**
-     * @var \ORMTest\ORM\Doctrine2\Model\Category
-     *
-     * @ORM\ManyToOne(targetEntity="ORMTest\ORM\Doctrine2\Model\Category")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="categoryId", referencedColumnName="id")
-     * })
+     * @ManyToOne(targetEntity="Category", inversedBy="products")
+     * @JoinColumn(name="categoryId", referencedColumnName="id")
      */
-    private $categoryid;
+    protected $category;
 
+    /**
+     * @ManyToMany(targetEntity="User", mappedBy="products")
+     */
+    protected $users;
 
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+
+    /**
+     * Set the value of id.
+     *
+     * @param integer $id
+     * @return \ORMTest\ORM\Doctrine2\Model\Product
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id.
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of price.
+     *
+     * @param float $price
+     * @return \ORMTest\ORM\Doctrine2\Model\Product
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of price.
+     *
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set the value of name.
+     *
+     * @param string $name
+     * @return \ORMTest\ORM\Doctrine2\Model\Product
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of description.
+     *
+     * @param string $description
+     * @return \ORMTest\ORM\Doctrine2\Model\Product
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set Category entity (many to one).
+     *
+     * @param \ORMTest\ORM\Doctrine2\Model\Category $category
+     * @return \ORMTest\ORM\Doctrine2\Model\Product
+     */
+    public function setCategory(Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get Category entity (many to one).
+     *
+     * @return \ORMTest\ORM\Doctrine2\Model\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Add User entity to collection.
+     *
+     * @param \ORMTest\ORM\Doctrine2\Model\User $user
+     * @return \ORMTest\ORM\Doctrine2\Model\Product
+     */
+    public function addUser(User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get User entity collection.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    public function __sleep()
+    {
+        return array('id', 'price', 'name', 'description', 'categoryId');
+    }
 }

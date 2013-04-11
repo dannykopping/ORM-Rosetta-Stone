@@ -34,6 +34,13 @@
             $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
             $this->entityManager = EntityManager::create($connectionParams, $config);
 
+            $u = new User();
+            $u->setFirstName("DannyX");
+            $u->setPassword(sha1("Hell"));
+            $this->entityManager->persist($u);
+            $this->entityManager->flush();
+            die();
+
             $query = $this->entityManager->createQuery('SELECT u FROM User u WHERE u.id = 1');
             $users = $query->getResult();
             print_r($users);

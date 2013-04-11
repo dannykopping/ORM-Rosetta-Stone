@@ -4,7 +4,8 @@
         "dhorrigan/capsule": "dev-master",
         "monolog/monolog": "dev-master",
         "dannykopping/fig": "dev-master",
-        "doctrine/orm": "2.3.3"
+        "doctrine/orm": "2.3.3",
+        "mysql-workbench-schema-exporter/mysql-workbench-schema-exporter": "dev-master"
     },
 
     "autoload": {

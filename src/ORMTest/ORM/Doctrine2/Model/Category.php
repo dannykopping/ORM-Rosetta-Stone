@@ -2,41 +2,169 @@
 
 namespace ORMTest\ORM\Doctrine2\Model;
 
-use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Category
+ * ORMTest\ORM\Doctrine2\Model\Category
  *
- * @ORM\Table(name="Category")
- * @ORM\Entity
+ * @Entity(repositoryClass="ORMTest\ORM\Doctrine2\Model\CategoryRepository")
+ * @Table(name="Category", indexes={@Index(name="fk_Category_Category1_idx", columns={"parentCategoryId"})})
  */
 class Category
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @Column(type="string", length=255, nullable=true)
      */
-    private $name;
+    protected $name;
 
     /**
-     * @var \ORMTest\ORM\Doctrine2\Model\Category
-     *
-     * @ORM\ManyToOne(targetEntity="ORMTest\ORM\Doctrine2\Model\Category")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="parentCategoryId", referencedColumnName="id")
-     * })
+     * @OneToOne(targetEntity="Category", mappedBy="category")
+     * @JoinColumn(name="parentCategoryId", referencedColumnName="id")
      */
-    private $parentcategoryid;
+    protected $category;
 
+    /**
+     * @OneToMany(targetEntity="Product", mappedBy="category")
+     * @JoinColumn(name="categoryId", referencedColumnName="id")
+     */
+    protected $products;
 
+    /**
+     * @OneToOne(targetEntity="Category", inversedBy="category")
+     * @JoinColumn(name="parentCategoryId", referencedColumnName="id")
+     */
+    protected $category;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
+
+    /**
+     * Set the value of id.
+     *
+     * @param integer $id
+     * @return \ORMTest\ORM\Doctrine2\Model\Category
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id.
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of name.
+     *
+     * @param string $name
+     * @return \ORMTest\ORM\Doctrine2\Model\Category
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set Category entity (one to one).
+     *
+     * @param \ORMTest\ORM\Doctrine2\Model\Category $category
+     * @return \ORMTest\ORM\Doctrine2\Model\Category
+     */
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get Category entity (one to one).
+     *
+     * @return \ORMTest\ORM\Doctrine2\Model\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Add Product entity to collection (one to many).
+     *
+     * @param \ORMTest\ORM\Doctrine2\Model\Product $product
+     * @return \ORMTest\ORM\Doctrine2\Model\Category
+     */
+    public function addProduct(Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get Product entity collection (one to many).
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
+    }
+
+    /**
+     * Set Category entity (one to one).
+     *
+     * @param \ORMTest\ORM\Doctrine2\Model\Category $category
+     * @return \ORMTest\ORM\Doctrine2\Model\Category
+     */
+    public function setCategory(Category $category = null)
+    {
+        $category->setCategory($this);
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get Category entity (one to one).
+     *
+     * @return \ORMTest\ORM\Doctrine2\Model\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    public function __sleep()
+    {
+        return array('id', 'name', 'parentCategoryId');
+    }
 }
