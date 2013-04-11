@@ -8,6 +8,7 @@
     use Illuminate\Database\Connectors\ConnectionFactory;
     use Illuminate\Database\Eloquent\Model;
     use Illuminate\Events\Dispatcher;
+    use ORMTest\ORM\Laravel\Model\OwnedProducts;
     use ORMTest\ORM\Laravel\Model\Product;
     use ORMTest\ORM\Laravel\Model\User;
 
@@ -46,12 +47,11 @@
 
         protected function singleTableSelect()
         {
-            print_r(User::find(1)->toArray());
             return User::find(1)->toArray();
         }
 
         protected function singleViewSelect()
         {
-            return DB::table('OwnedProducts')->first();
+            return OwnedProducts::first()->toArray();
         }
     }
