@@ -29,7 +29,7 @@
     $log->pushHandler(new StreamHandler(__DIR__ . '/log.txt'));
 
     // create ORM instances
-    $types = array(Factory::LARAVEL);
+    $types = array(Factory::LARAVEL, Factory::DOCTRINE2);
 
     foreach ($types as $type) {
         Registry::add($type, Factory::create($type, $log));
