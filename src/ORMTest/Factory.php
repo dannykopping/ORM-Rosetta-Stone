@@ -9,11 +9,14 @@ class Factory {
 
     const LARAVEL = "Laravel";
     const DOCTRINE2 = "Doctrine2";
+    const REDBEAN = "RedBeanPHP";
 
     /**
      * @param $type
+     * @param $args
+     *
+     * @throws \Exception
      * @return ORM
-     * @throws Exception
      */
     public static function create($type, $args)
     {
@@ -21,17 +24,7 @@ class Factory {
             $args = array($args);
 
         $pattern = "\\ORMTest\\ORM\\%s\\ORM";
-        $className = "";
-
-        switch($type)
-        {
-            case self::LARAVEL:
-                $className = "Laravel";
-                break;
-            case self::DOCTRINE2:
-                $className = "Doctrine2";
-                break;
-        }
+        $className = $type;
 
         $className = sprintf($pattern, $className);
         if(!class_exists($className))
