@@ -1,7 +1,7 @@
 <?php
+    use Analog\Analog;
+    use Analog\Handler\File;
     use Fig\Fig;
-    use Monolog\Handler\StreamHandler;
-    use Monolog\Logger;
     use ORMTest\Base\Registry;
     use ORMTest\Factory;
 
@@ -25,12 +25,12 @@
     );
 
     // create logger
-    $log = new Logger('orm');
-    $log->pushHandler(new StreamHandler(__DIR__ . '/log.txt'));
+    Analog::handler(File::init(__DIR__ . '/log.txt'));
+    Analog::alert(str_repeat('-',10).'ORM Rosetta Stone'.str_repeat('-',10));
 
     // create ORM instances
     $types = array(Factory::LARAVEL, Factory::REDBEAN);
 
     foreach ($types as $type) {
-        Registry::add($type, Factory::create($type, $log));
+        Registry::add($type, Factory::create($type));
     }

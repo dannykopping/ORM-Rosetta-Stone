@@ -2,7 +2,7 @@
     "require": {
         "gabordemooij/redbean": "v3.4.1",
         "dhorrigan/capsule": "dev-master",
-        "monolog/monolog": "dev-master",
+        "analog/analog": "dev-master",
         "dannykopping/fig": "dev-master",
         "doctrine/orm": "2.3.3"
     },

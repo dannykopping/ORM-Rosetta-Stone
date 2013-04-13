@@ -1,6 +1,4 @@
 <?php
-    use Monolog\Handler\StreamHandler;
-    use Monolog\Logger;
     use ORMTest\Base\Registry;
 
     class SelectTest extends BaseTest

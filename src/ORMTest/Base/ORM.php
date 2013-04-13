@@ -1,18 +1,14 @@
 <?php
     namespace ORMTest\Base;
 
-    use Monolog\Logger;
+    use Analog\Analog;
 
     abstract class ORM
     {
         protected $name;
 
-        protected $log;
-
-        public function __construct(Logger $log)
+        public function __construct()
         {
-            $this->log = $log;
-
             $this->setup();
         }
 
@@ -25,8 +21,8 @@
             $result = call_user_func_array(array($this, $name), $arguments);
 
             // log results
-            $this->log->debug("Calling $name on {$this->name} instance");
-            $this->log->debug(var_export($result, true));
+            Analog::debug("Calling $name on {$this->name} instance");
+            Analog::debug(var_export($result, true));
 
             return $result;
         }
@@ -38,7 +34,7 @@
          */
         protected function singleColumnSelect()
         {
-            $this->log->info("Selecting single column from a table");
+            Analog::info("Selecting single column from a table");
         }
 
         /**
@@ -46,7 +42,7 @@
          */
         protected function singleTableSelect()
         {
-            $this->log->info("Selecting single table");
+            Analog::info("Selecting single table");
         }
 
         /**
@@ -54,6 +50,6 @@
          */
         protected function singleViewSelect()
         {
-            $this->log->info("Selecting single view");
+            Analog::info("Selecting single view");
         }
     }

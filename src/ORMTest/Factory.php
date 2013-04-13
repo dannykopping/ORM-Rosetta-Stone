@@ -18,7 +18,7 @@ class Factory {
      * @throws \Exception
      * @return ORM
      */
-    public static function create($type, $args)
+    public static function create($type, $args = array())
     {
         if(!is_array($args))
             $args = array($args);

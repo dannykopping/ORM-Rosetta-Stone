@@ -1,6 +1,4 @@
 <?php
-    use Monolog\Handler\StreamHandler;
-    use Monolog\Logger;
     use ORMTest\Base\Registry;
 
     abstract class BaseTest extends PHPUnit_Framework_TestCase
